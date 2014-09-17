@@ -1,6 +1,13 @@
 'use strict';
 
-function Bookmark(){
+var Mongo = require('mongodb');
+
+function Bookmark(o, user){
+  this.title      = o.title;
+  this.url        = o.url;
+  this.date       = new Date(o.date);
+  this.categoryId = Mongo.ObjectID(o.categoryId);
+  this.userId     = user._id;
 }
 
 Object.defineProperty(Bookmark, 'collection', {
@@ -8,8 +15,8 @@ Object.defineProperty(Bookmark, 'collection', {
 });
 
 Bookmark.create = function(o, user, cb){
-  o.userId = user._id;
-  Bookmark.collection.save(o, cb);
+  var b = new Bookmark(o, user);
+  Bookmark.collection.save(b, cb);
 };
 
 Bookmark.all = function(user, cb){
@@ -17,4 +24,5 @@ Bookmark.all = function(user, cb){
 };
 
 module.exports = Bookmark;
+
 

@@ -4,8 +4,8 @@
   angular.module('yum.my')
   .factory('Bookmark', ['$http', function($http){
 
-    function create(name){
-      return $http.post('/bookmarks', {name:name});
+    function create(bookmark){
+      return $http.post('/bookmarks', bookmark);
     }
 
     function all(){
